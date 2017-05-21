@@ -18,6 +18,6 @@ router.use('/auth', authRoutes);
 
 // mount publications routes as /publication
 
-router.use('/publication', publicationRoutes);
+router.use('/publications', publicationRoutes);
 
 export default router;

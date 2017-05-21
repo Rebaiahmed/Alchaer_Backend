@@ -16,6 +16,8 @@ router.route('/login')
 
 router.route('/register')
   .post(authCtrl.register);
+ router.route('/save')
+   .post(authCtrl.SaveUser) 
 
 
 export default router;
