@@ -14,7 +14,6 @@
     "start": "gulp serve",
     "start:debug": "cross-env DEBUG=express-mongoose-es6-rest-api:* yarn start",
     "build": "gulp",
-   
     "test": "cross-env NODE_ENV=test ./node_modules/.bin/mocha --ui bdd --reporter spec --colors --compilers js:babel-core/register server/tests --recursive",
     "test:watch": "yarn test -- --watch",
     "test:coverage": "cross-env NODE_ENV=test ./node_modules/.bin/istanbul cover _mocha -- --ui bdd --reporter spec --colors --compilers js:babel-core/register server/tests --recursive",
@@ -43,6 +42,7 @@
     "bluebird": "3.4.6",
     "body-parser": "1.15.2",
     "compression": "1.6.2",
+    "connect-timeout": "1.9.0",
     "cookie-parser": "1.4.3",
     "cors": "2.8.1",
     "crypto": "0.0.3",
