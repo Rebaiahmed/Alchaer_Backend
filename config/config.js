@@ -16,19 +16,20 @@ const envVarsSchema = Joi.object({
       then: Joi.boolean().default(true),
       otherwise: Joi.boolean().default(false)
     }),
-  JWT_SECRET: Joi.string().required()
-    .description('JWT Secret required to sign'),
-  MONGO_HOST: Joi.string().required()
-    .description('Mongo DB host url'),
-  MONGO_PORT: Joi.number()
-    .default(27017)
+
+  MONGO_HOST: 'mongodb://admin:admin@ds153521.mlab.com:53521/alchaheer',
+  
+  MONGO_PORT: '53521'
 }).unknown()
   .required();
 
 const { error, value: envVars } = Joi.validate(process.env, envVarsSchema);
-if(error) {
+
+
+
+/*if(error) {
   throw new Error(`Config validation error: ${error.message}`);
-}
+}*/
 
 const config = {
   env: envVars.NODE_ENV,
@@ -36,8 +37,8 @@ const config = {
   mongooseDebug: envVars.MONGOOSE_DEBUG,
   jwtSecret:'secretokenjwt',
   mongo: {
-    host: '127.0.0.1',
-    port: '27017'
+    host: 'mongodb://admin:admin@ds153521.mlab.com:53521/alchaheer',
+    port: '53521'
   }
 };
 

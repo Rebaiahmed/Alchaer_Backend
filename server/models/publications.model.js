@@ -92,14 +92,19 @@ PublicationSchema.statics = {
    */
   get(id) {
     return this.findById(id)
-      .exec()
-      .then((pub) => {
-        if (pub) {
+    .populate('_creator')
+      .exec(function(err,pub){
+
+       // console.log("pub"+ JSON.stringify(pub));
+       if (pub) {
           return pub;
         }
-        const err = new APIError('No such publication exists!', httpStatus.NOT_FOUND);
+        console.log("err"+ err);
+        //const err = new APIError('No such publication exists!', httpStatus.NOT_FOUND);
         return Promise.reject(err);
-      });
+      })
+      
+    
   },
 
   /**
@@ -140,6 +145,9 @@ PublicationSchema.statics = {
 
   getAll() {
     return this.find()
+    .populate('User')
+     .populate('likedBy')
+     .populate('commentedBy')
       .exec()
       .then((publications) => {
         if (publications) {

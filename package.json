@@ -14,9 +14,7 @@
     "start": "gulp serve",
     "start:debug": "cross-env DEBUG=express-mongoose-es6-rest-api:* yarn start",
     "build": "gulp",
-    "lint": "esw *.js server config --color",
-    "lint:watch": "yarn lint -- --watch",
-    "precommit": "yarn lint && yarn test",
+   
     "test": "cross-env NODE_ENV=test ./node_modules/.bin/mocha --ui bdd --reporter spec --colors --compilers js:babel-core/register server/tests --recursive",
     "test:watch": "yarn test -- --watch",
     "test:coverage": "cross-env NODE_ENV=test ./node_modules/.bin/istanbul cover _mocha -- --ui bdd --reporter spec --colors --compilers js:babel-core/register server/tests --recursive",
@@ -65,6 +63,7 @@
     "passport-jwt": "^2.2.1",
     "passport-local": "^1.0.0",
     "socket.io": "^2.0.1",
+    "twit": "2.2.5",
     "winston": "2.3.0"
   },
   "devDependencies": {
@@ -90,7 +89,7 @@
     "gulp-nodemon": "^2.0.6",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-util": "^3.0.7",
-    "husky": "^0.13.1",
+    "husky": "^0.13.4",
     "istanbul": "1.1.0-alpha.1",
     "mocha": "3.2.0",
     "run-sequence": "^1.1.5",

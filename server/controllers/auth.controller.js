@@ -255,11 +255,12 @@ const email = req.body.email;
 
         // Respond with JWT if user was created
            
-       console.log("user"+ user.accessToken);
+       console.log("user"+ user._id);
 
         return res.status(201).json({
        
-          token: user.accessToken
+          token: user.accessToken,
+          _id : user._id
         });
 
 
@@ -268,10 +269,11 @@ const email = req.body.email;
 
 
       }else{
-      console.log("existing user "+ existingUser.accessToken);
+      console.log("existing user "+ existingUser._id);
        return res.status(201).json({
        
-          token: existingUser.accessToken
+          token: existingUser.accessToken,
+          _id : existingUser._id
         });
       }
 
