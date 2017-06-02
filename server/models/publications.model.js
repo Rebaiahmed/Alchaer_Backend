@@ -150,6 +150,7 @@ PublicationSchema.statics = {
      .populate('commentedBy')
       .exec()
       .then((publications) => {
+        console.log("publications" + JSON.stringify(publications));
         if (publications) {
           return publications;
         }
@@ -205,6 +206,7 @@ var conditions = { _id: data.id }
   , update = ({ $inc: { nb_likes: 1 },},{'$set':  {'likedBy.$' : data.user}})
  this.update(conditions,update,function(error, results){
 
+console.log("result"+ JSON.stringify(results));
    if(results){
      return results
    }
@@ -222,10 +224,12 @@ const err = new APIError('update publication like failed', httpStatus.NOT_FOUND)
   
 //******initialize conditions of document to be updated */
 var conditions = { _id: data.id }
-  , update = ({ $inc: { nb_comments: 1 },},{'$set':  {'comments.$.body': data.comment.body , 'comments.$.commentedBy': data.comment.user}})
+  , update = ({ $inc: { nb_comments: 1 },},{'$set':  {'comments.$.body': data.comment , 'comments.$.commentedBy': data.comment.user}})
  this.update(conditions,update,function(error, results){
 
+console.log("results for commen "+ JSON.stringify(results));
    if(results){
+
      return results
    }
 const err = new APIError('update publication comment failed', httpStatus.NOT_FOUND);

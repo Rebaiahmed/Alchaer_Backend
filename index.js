@@ -65,52 +65,6 @@ let io = new SocketIO(server);
 
 
 
-import  Twit  from 'twit' ;
-
-var T = new Twit({
-  consumer_key:         'iL7cwF2NOCRtDmn7SsUdv1DL8',
-  consumer_secret:      '7zYSGlNGvwjhAyJGuIP7NAzMUKAbMFxBX1ORcEbszndQ73EPty',
-  access_token:         '2787208365-0Vp6om1AVeCY8CTE7MA9uPrBXKEjP9UHl5LBxd8',
-  access_token_secret:  'Q65p37EBQp3oIVvUNl7yOpZuvGzBhJzy62jp4FkwhH90f',
-  timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
-})
-
-
-console.log("T")
-
-/*T.post('statuses/update', { status: 'hello world!' }, function(err, data, response) {
-  console.log(data)
-})*/
-
-/*T.get('search/tweets', { q: 'أمير ألشعراء' ,count :1}, function(err, data, response) {
-  console.log(JSON.stringify(data));
-})*/
-
-
-
-//*********test Stream */
-//var stream = T.stream('statuses/filter', { track: 'أمير ألشعراء', language: 'ar' })
-
-/*stream.on('tweet', function (tweet) {
-  console.log(tweet)
-})*/
-
-
-/*T.get('users/suggestions/:slug', { slug: 'الشعر العربي' }, function (err, data, response) {
-  if(err){
-    console.log("error !"+ err);
-  }
-  console.log(JSON.stringify(data));
-})*/
-
-
-/*T.get('search/tweets', { q: 'الشعر العربي  since:2011-07-11', count: 5 }, function(err, data, response) {
-  if(err)
-  {
-    console.log("err"+ err);
-  }
-  console.log(JSON.stringify(data));
-})*/
 
 /*var stream = T.stream('statuses/filter', { track: 'لشعر العربي' })
 
@@ -121,9 +75,7 @@ stream.on('tweet', function (tweet) {
 
 if (!module.parent) {
 
-/*******  the socket.io code */
 
-console.log("io is" + io);
 
 io.on('connection', (socket) => {
 

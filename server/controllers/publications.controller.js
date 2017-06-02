@@ -52,7 +52,7 @@ function load(req, res, next, id) {
   Publication.get(id)
   
     .then((pub) => {
-      console.log("pub"+ JSON.stringify(pub));
+      //console.log("pub"+ JSON.stringify(pub));
       req.pub = pub; // eslint-disable-line no-param-reassign
       return next();
     })
@@ -82,18 +82,64 @@ function create(req, res, next) {
   const userId = req.body.userId ;
   const content = req.body.content ;
 
-  res.json("ok");
+  //res.json("ok");
 
-/*console.log("body"+ JSON.stringify(req.body))
-
-var pub = new Publication({Title :req.body.Title,Content :req.body.Content
-, nb_comments:0,nb_likes:0,Country:req.body.Country,ImageUrl:req.body.ImageUrl,
-commentedBy :[],likedBy:[],User:req.body.User,tags :req.body.tags})
+console.log("body"+ JSON.stringify(req.body))
 
 
-  pub.save()
-    .then(savedPub => res.json(savedPub))
-    .catch(e => next(e));
+
+
+
+
+User.findById(userId).then(user=>{
+
+  console.log("User found" + JSON.stringify(user));
+
+  var pub = new Publication({Title :title,Content :content
+, nb_comments:0,nb_likes:0,Country:'',ImageUrl:'',
+commentedBy :[],likedBy:[],User:user,tags :[]})
+
+
+ pub.save()
+    .then(savedPub => 
+    {
+    //res.json(savedPub)
+    //ajouter cette publication 
+    console.log("save pub"+ JSON.stringify(savedPub));
+
+   
+      user.publications.push(savedPub);
+      user.save().then(
+        data=>{
+      //res.status(201).json("ok");
+    
+
+    }).catch(error=>{
+      console.log("error"+ JSON.stringify(error));
+      next(error)
+    })
+     savedPub.User = user ;
+
+     savedPub.save(error=>{
+       if(!error){
+         res.status(201).json("ok");
+       }
+     })
+
+    
+    }).catch(err=>{
+  console.log("err" + err);
+  next(err);
+})
+
+
+}).catch(err=>{
+  console.log("err" + err);
+  next(err);
+})
+
+ 
+   
 
   /*user.save()
     .then(savedUser => res.json(savedUser))
@@ -108,17 +154,18 @@ commentedBy :[],likedBy:[],User:req.body.User,tags :req.body.tags})
  * Add likes to one publication**********
  * @returns {User}
  */
-function AddLike(req,re,next)
+function AddLike(req,res,next)
 {
 
- const userId = '592814923240d64120775b73' ;
+ const userId = req.body.userId ;
+ const pubId = req.body.pubId ;
 
 
 User.findById(userId).then(user=>{
 
 
-data.id = '' ;
-data.user = user.username ;
+data.id = pubId ;
+data.user = user ;
 
 Publication.AddLike(data)
   .then(savedPub => res.json(savedPub))
@@ -143,14 +190,17 @@ function AddComment(req,re,next)
 {
 
 
- const userId = '592814923240d64120775b73' ;
+ const userId = req.body.userId ;
+ const pubId = req.body.pubId ;
+ const comment = req.body.comment ;
 
 
 User.findById(userId).then(user=>{
 
 
-data.id = '' ;
-data.user = user.username ;
+data.id = pubId ;
+data.user = user ;
+data.comment = comment ;
 Publication.AddComment(data)
 
 
@@ -161,7 +211,7 @@ Publication.AddComment(data)
 
 
     }).catch(e=>{
-  console.log("err fetching user data");
+  console.log("err adding coment ");
 })
 }
 
