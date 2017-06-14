@@ -200,42 +200,77 @@ PublicationSchema.statics = {
  * 
  */
 
-  AddLike(data) {
-  //******initialize conditions of document to be updated */
-var conditions = { _id: data.id }
-  , update = ({ $inc: { nb_likes: 1 },},{'$set':  {'likedBy.$' : data.user}})
- this.update(conditions,update,function(error, results){
+  AddLike(pubId,user) {
 
-console.log("result"+ JSON.stringify(results));
-   if(results){
-     return results
-   }
+//console.log("the user is" + JSON.stringify(user));
+
+return this.findOneAndUpdate({_id :pubId},{$addToSet: {likedBy: user._id}}, {$inc: {nb_likes:1}})
+.exec(function(err,data){
+
+  if(err)
+  {
+    console.log("err" + err);
+  }
+  console.log("data" + JSON.stringify(data));
+})
+
+
+//console.log("data" + JSON.stringify(results) + "error" + JSON.stringify(error));
+
+
+
+  
+/*
+.then(function(data){
+
+
+console.log("data" + data);
+
+}).catch(function(error){
+  console.log("err"+ error);
+
 const err = new APIError('update publication like failed', httpStatus.NOT_FOUND);
         return Promise.reject(err);
+}) */
 
- })
+
+
+
+
+
+
+
+
   },
 
 /**
  * 
  */
 
-  AddComment(data) {
+  AddComment(pubId,user,comment) {
   
-//******initialize conditions of document to be updated */
-var conditions = { _id: data.id }
-  , update = ({ $inc: { nb_comments: 1 },},{'$set':  {'comments.$.body': data.comment , 'comments.$.commentedBy': data.comment.user}})
- this.update(conditions,update,function(error, results){
 
-console.log("results for commen "+ JSON.stringify(results));
-   if(results){
 
-     return results
-   }
-const err = new APIError('update publication comment failed', httpStatus.NOT_FOUND);
+
+return this.findOneAndUpdate({_id :pubId}, {$inc: {nb_comments:1}}, {$addToSet: {commentedBy: user}},
+{$addToSet: {commentedBy: user}},function(error, results){
+
+//console.log("data" + JSON.stringify(results) + "error" + JSON.stringify(error));
+
+
+if(results)
+{
+   res.json(results) ;
+}else{
+
+  const err = new APIError('update publication like failed', httpStatus.NOT_FOUND);
         return Promise.reject(err);
+        
+}
 
- })
+})
+
+
 
 
 

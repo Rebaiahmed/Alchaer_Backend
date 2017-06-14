@@ -158,23 +158,35 @@ function AddLike(req,res,next)
 {
 
  const userId = req.body.userId ;
- const pubId = req.body.pubId ;
+ const pubId = req.body.postId ;
 
+console.log("userId" + userId + "pubId"+ pubId);
 
 User.findById(userId).then(user=>{
 
+//console.log("the user found" + JSON.stringify(user));
 
-data.id = pubId ;
-data.user = user ;
 
-Publication.AddLike(data)
-  .then(savedPub => res.json(savedPub))
-    .catch(e => next(e));
+
+
+
+Publication.AddLike(pubId,user).then(function(data){
+
+console.log("data" + data);
+res.json(data);
+}).catch(function(err){
+  console.log("err"+ err);
+  res.json(err);
+})
+ 
+
+
+  
 
 
 
 }).catch(e=>{
-  console.log("err fetching user data");
+  console.log("err fetching user data"  + e);
 })
 
 }
@@ -192,21 +204,32 @@ function AddComment(req,re,next)
 
  const userId = req.body.userId ;
  const pubId = req.body.pubId ;
- const comment = req.body.comment ;
+ const comment = req.body.commentBody ;
+
+
+ console.log("comment" + comment + "pubId0" + pubId
+ + "userId" + userId);
 
 
 User.findById(userId).then(user=>{
 
 
-data.id = pubId ;
-data.user = user ;
-data.comment = comment ;
-Publication.AddComment(data)
+
+let comment = new Comment({
+  body : comment ,
+  createdAt : new Date ,
+  commentedBy : user
+})
+
+
+Publication.AddComment(pubId,user,comment)
 
 
 
 
-  .then(savedPub => res.json(savedPub))
+  .then(savedPub => {
+  console.log("saved pub" + savedPub)
+  res.json(savedPub) })
     .catch(e => next(e));
 
 
@@ -274,6 +297,11 @@ Publication.getAllBylikes()
 
 
 
+
+function checkLike(req,res,next)
+{
+
+}
 
 
 /**

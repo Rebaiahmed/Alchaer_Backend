@@ -26,7 +26,7 @@ router.route('/likes')
 
 
 router.route('/:pubId')
-  /** GET /api/users/:userId - Get user */
+  /** GET /api/users/:pubId - Get user */
   .get(pubCtrl.getPublication)
 
 
@@ -36,9 +36,9 @@ router.route('/:pubId')
 
 
 
-router.route('/likes/:pubId')
+router.route('/likes')
   /** GET /api/users/:userId - Get user */
-  .put(pubCtrl.AddLike);
+  .post(pubCtrl.AddLike);
 
 router.route('/comments/:pubId')
   /** GET /api/users/:userId - Get user */
